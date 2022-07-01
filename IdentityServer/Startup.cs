@@ -8,6 +8,11 @@ namespace IdentityServer
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(
+                options => options.AddPolicy(
+                    "allow_all",
+                    policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            
             services.AddControllersWithViews();
 
             services.AddIdentityServer(options =>
@@ -27,6 +32,8 @@ namespace IdentityServer
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseCors("allow_all");
+            
             app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();

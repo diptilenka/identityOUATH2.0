@@ -13,6 +13,11 @@ namespace Api.Swashbuckle
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(
+                options => options.AddPolicy(
+                    "allow_all",
+                    policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            
             services.AddControllers();
 
             services.AddAuthentication("Bearer")
@@ -20,26 +25,23 @@ namespace Api.Swashbuckle
                 {
                     options.ApiName = "api1";
                     options.Authority = "http://localhost:5100";
+                    options.RequireHttpsMetadata = false;
                 });
 
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo {Title = "Protected API", Version = "v1"});
 
+                var tokenUrl = new Uri("http://localhost:5100/connect/token");
+                var scopes = new Dictionary<string, string> { {"api1", "Demo API - full access"} };
+                
                 options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
                     Flows = new OpenApiOAuthFlows
                     {
-                        AuthorizationCode = new OpenApiOAuthFlow
-                        {
-                            AuthorizationUrl = new Uri("http://localhost:5100/connect/authorize"),
-                            TokenUrl = new Uri("http://localhost:5100/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                {"api1", "Demo API - full access"}
-                            }
-                        }
+                        ClientCredentials = new OpenApiOAuthFlow {TokenUrl = tokenUrl, Scopes = scopes},
+                        Password = new OpenApiOAuthFlow { TokenUrl = tokenUrl, Scopes = scopes }
                     }
                 });
 
@@ -49,6 +51,8 @@ namespace Api.Swashbuckle
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseCors("allow_all");
+            
             app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
 
@@ -65,10 +69,9 @@ namespace Api.Swashbuckle
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
 
-                options.OAuthClientId("bob");
+                options.OAuthClientId("client_1");
                 options.OAuthClientSecret("secret");
                 options.OAuthAppName("Demo API - Swagger");
-                options.OAuthUsePkce();
             });
 
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());

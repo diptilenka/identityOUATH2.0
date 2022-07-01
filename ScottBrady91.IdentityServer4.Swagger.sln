@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Swashbuckle", "Api.Swashbuckle\Api.Swashbuckle.csproj", "{1246DA17-6314-4E20-9093-D41A961B5950}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.NSwag", "Api.NSwag\Api.NSwag.csproj", "{F96FDE8E-BA26-4D08-B2A1-F8F5226E0D23}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{1246DA17-6314-4E20-9093-D41A961B5950}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1246DA17-6314-4E20-9093-D41A961B5950}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1246DA17-6314-4E20-9093-D41A961B5950}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F96FDE8E-BA26-4D08-B2A1-F8F5226E0D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F96FDE8E-BA26-4D08-B2A1-F8F5226E0D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F96FDE8E-BA26-4D08-B2A1-F8F5226E0D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F96FDE8E-BA26-4D08-B2A1-F8F5226E0D23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

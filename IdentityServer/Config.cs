@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IdentityServer
 {
@@ -30,14 +31,12 @@ namespace IdentityServer
                 // Swashbuckle & NSwag
                 new Client
                 {
-                    ClientId = "bob",
+                    ClientId = "client_1",
                     ClientName = "Swagger UI for demo_api",
                     ClientSecrets = {new Secret("secret".Sha256())}, // change me!
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-                    RedirectUris = {"http://localhost:5000/swagger/oauth2-redirect.html"},
-                    AllowedCorsOrigins = {"http://localhost:5000"},
+                    AllowedGrantTypes = new List<string> {GrantType.ClientCredentials, GrantType.ResourceOwnerPassword},
+                    RequirePkce = false,
+                    RequireClientSecret = true,
                     AllowedScopes = {"api1"}
                 }
             };
