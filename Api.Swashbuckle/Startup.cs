@@ -21,15 +21,16 @@ namespace Api.Swashbuckle
             services.AddControllers();
 
             services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication("Bearer", options =>
+                .AddJwtBearer("Bearer", options =>
                 {
-                    options.ApiName = "api1";
+                    options.Audience = "api1";
                     options.Authority = "http://localhost:5100";
                     options.RequireHttpsMetadata = false;
                 });
 
             services.AddSwaggerGen(options =>
             {
+                options.EnableAnnotations();
                 options.SwaggerDoc("v1", new OpenApiInfo {Title = "Protected API", Version = "v1"});
 
                 var tokenUrl = new Uri("http://localhost:5100/connect/token");
@@ -72,6 +73,7 @@ namespace Api.Swashbuckle
                 options.OAuthClientId("client_1");
                 options.OAuthClientSecret("secret");
                 options.OAuthAppName("Demo API - Swagger");
+                options.DisplayOperationId();
             });
 
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());

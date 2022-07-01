@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Swashbuckle.Controllers
 {
@@ -16,6 +17,7 @@ namespace Api.Swashbuckle.Controllers
         };
         
         [HttpGet]
+        [SwaggerOperation(OperationId = "getweather")]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
